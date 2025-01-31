@@ -8,6 +8,7 @@ const Forecast = ({ forecast, today }: { forecast: any; today?: boolean }) => {
         <img
           src={`./${forecast?.weather[0].main.toLowerCase()}.png`}
           width={50}
+          height={50}
         />
         <span>
           {today

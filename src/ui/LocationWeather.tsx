@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function LocationWeather({
   weather,
@@ -7,12 +7,26 @@ export default function LocationWeather({
   weather: any;
   handleDelete: (id: any) => void;
 }) {
+  const navigate = useNavigate();
+
+  const navigateToDetails = () => {
+    navigate(
+      `/location-details?city=${weather.name}&lat=${weather.coord.lat}&lon=${lon}`
+    );
+  };
+
+  const deleteLocation = (e: any) => {
+    e.stopPropagation();
+    e.preventDefault();
+    handleDelete(weather.id);
+  };
+
   const lon = weather.coord.lon;
   return (
     <li className="">
-      <Link
+      <span
         className="flex justify-between items-center py-2"
-        to={`/location-details?city=${weather.name}&lat=${weather.coord.lat}&lon=${lon}`}
+        onClick={navigateToDetails}
       >
         <div className="flex items-center gap-3">
           <img
@@ -26,10 +40,10 @@ export default function LocationWeather({
             </span>
           </div>
         </div>
-        <button onClick={() => handleDelete(weather.id)}>
+        <button onClick={deleteLocation}>
           <img src="./trash.svg" width={20} />
         </button>
-      </Link>
+      </span>
     </li>
   );
 }

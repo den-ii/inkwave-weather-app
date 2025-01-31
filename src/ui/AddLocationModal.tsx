@@ -96,7 +96,7 @@ export default function AddLocationModal({
             Search for a location
           </div>
         )}
-        {locations.length > 0 && (
+        {locations.length > 0 && !loading && (
           <ul>
             {locations?.map((location: any) => {
               const id = `${location.lat},${location.lon}`;
