@@ -1,8 +1,26 @@
 import { useLayoutEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
-const Forecast = () => {
-  return <li></li>;
+const Forecast = ({ forecast, today }: { forecast: any; today?: boolean }) => {
+  return (
+    <li className="flex items-center justify-between">
+      <span>
+        {today
+          ? "Today"
+          : new Date(forecast.dt * 1000).toLocaleDateString("en-US", {
+              weekday: "long",
+            })}
+      </span>
+      {!today && (
+        <span>
+          {forecast?.temp?.min?.toFixed()}&deg; -{" "}
+          {forecast?.temp?.max?.toFixed()}
+          &deg;
+        </span>
+      )}
+      {today && <span>{forecast.temp.toFixed()}&deg;</span>}
+    </li>
+  );
 };
 
 export default function LocationDetails() {
@@ -29,9 +47,7 @@ export default function LocationDetails() {
     } catch (err) {
       console.error(err);
     }
-  });
-
-  console.log(city);
+  }, []);
 
   return (
     <main className="container max-h-[600px]">
@@ -50,8 +66,13 @@ export default function LocationDetails() {
         </div>
       </div>
       <div className="py-4 px-5">
-        <p>5 day forecast</p>
-        <ul className="py-4"></ul>
+        <p className="text-lg font-medium">5 day forecast</p>
+        <ul className="py-4">
+          <Forecast forecast={details?.current} today />
+          {details?.daily.slice(0, 4).map((forecast: any) => (
+            <Forecast key={forecast.dt} forecast={forecast} />
+          ))}
+        </ul>
       </div>
     </main>
   );
