@@ -41,7 +41,7 @@ export default function AddLocationModal({
     let location = null;
     try {
       const res = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${
+        `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${
           import.meta.env.VITE_OPEN_WEATHER_API_KEY
         }`
       );
