@@ -3,6 +3,8 @@ import AddLocationModal from "../ui/AddLocationModal";
 import LocationWeather from "../ui/LocationWeather";
 import Loader from "../ui/Loader";
 
+const BASE_URL = import.meta.env.PROD ? import.meta.env.VITE_BASE_URL : "/api";
+
 export default function Home() {
   const [addLocationModal, setAddLocationModal] = useState(false);
   const [locations, setLocations] = useState<any>([]);
@@ -29,7 +31,7 @@ export default function Home() {
 
     try {
       const google_res = await fetch(
-        `/api/place/autocomplete/json?input=${
+        `${BASE_URL}/place/autocomplete/json?input=${
           location.place
         }&types=(cities)&key=${import.meta.env.VITE_GOOGLE_API_KEY}`
       );
@@ -45,7 +47,7 @@ export default function Home() {
       const photo_reference = photo_id_data.result.photos[0].photo_reference;
 
       const photo_res = await fetch(
-        `/api/place/photo?maxwidth=400&photo_reference=${photo_reference}&key=${
+        `${BASE_URL}/place/photo?maxwidth=400&photo_reference=${photo_reference}&key=${
           import.meta.env.VITE_GOOGLE_API_KEY
         }`
       );
