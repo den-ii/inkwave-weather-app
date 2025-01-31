@@ -3,9 +3,10 @@ import AddLocationModal from "../ui/AddLocationModal";
 import LocationWeather from "../ui/LocationWeather";
 import Loader from "../ui/Loader";
 
-const GOOGLE_URL = import.meta.env.PROD
-  ? import.meta.env.VITE_GOOGLE_URL
-  : "/api";
+const GOOGLE_URL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_GOOGLE_URL
+    : "/api";
 
 export default function Home() {
   const [addLocationModal, setAddLocationModal] = useState(false);
