@@ -2,15 +2,23 @@ import { useLayoutEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 const Forecast = ({ forecast, today }: { forecast: any; today?: boolean }) => {
+  console.log("here:", forecast?.weather[0].main.toLowerCase());
   return (
     <li className="flex items-center justify-between">
-      <span>
-        {today
-          ? "Today"
-          : new Date(forecast.dt * 1000).toLocaleDateString("en-US", {
-              weekday: "long",
-            })}
+      <span className="flex gap-3 items-center">
+        <img
+          src={`./${forecast?.weather[0].main.toLowerCase()}.png`}
+          width={50}
+        />
+        <span>
+          {today
+            ? "Today"
+            : new Date(forecast?.dt * 1000).toLocaleDateString("en-US", {
+                weekday: "long",
+              })}
+        </span>
       </span>
+
       {!today && (
         <span>
           {forecast?.temp?.min?.toFixed()}&deg; -{" "}
@@ -18,7 +26,7 @@ const Forecast = ({ forecast, today }: { forecast: any; today?: boolean }) => {
           &deg;
         </span>
       )}
-      {today && <span>{forecast.temp.toFixed()}&deg;</span>}
+      {today && <span>{forecast?.temp?.toFixed()}&deg;</span>}
     </li>
   );
 };
