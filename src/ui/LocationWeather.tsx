@@ -7,8 +7,6 @@ export default function LocationWeather({
   weather: any;
   handleDelete: (id: any) => void;
 }) {
-  console.log("main:", weather.id);
-  console.log("main:", weather);
   const lon = weather.coord.lon;
   return (
     <li className="">

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import AddLocation from "../ui/AddLocationModal";
 import AddLocationModal from "../ui/AddLocationModal";
 import LocationWeather from "../ui/LocationWeather";
 import Loader from "../ui/Loader";
@@ -15,7 +13,6 @@ export default function Home() {
     setLocations((prev: any) => [...prev, location]);
     setLoading(true);
     setAddLocationModal(false);
-    console.log(location);
     let weather = null;
     try {
       const res = await fetch(
@@ -26,7 +23,6 @@ export default function Home() {
         }`
       );
       weather = await res.json();
-      console.log(location.place);
     } catch (err) {
       console.error("error", err);
     }
@@ -39,7 +35,6 @@ export default function Home() {
       );
 
       const google_data = await google_res.json();
-      console.log("google: ", google_data);
       const place_id = google_data.predictions[0].place_id ?? null;
       const photo_id_res = await fetch(
         `/api/place/details/json?placeid=${place_id}&key=${
@@ -47,11 +42,6 @@ export default function Home() {
         }`
       );
       const photo_id_data = await photo_id_res.json();
-      console.log("photo_data:", photo_id_data);
-      console.log(
-        "photo_data:",
-        photo_id_data.result.photos[0].photo_reference
-      );
       const photo_reference = photo_id_data.result.photos[0].photo_reference;
 
       const photo_res = await fetch(
@@ -60,20 +50,17 @@ export default function Home() {
         }`
       );
       // const photo_data = await photo_res.json();
-      console.log("actual photo:", photo_res.url);
       weather.image = photo_res.url;
       weather = { ...weather, image: weather.image };
     } catch (err) {
       console.error(err);
     }
     if (!weather) return;
-    console.log("weather:", weather);
     setWeatherLocations((prev: any) => [...prev, weather]);
     setLoading(false);
   }
 
   function removeLocation(id: string) {
-    console.log(id);
     setLocations((prev: any) =>
       prev.filter((location: any) => location.id !== id)
     );

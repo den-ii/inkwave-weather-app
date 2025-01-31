@@ -31,14 +31,14 @@ export default function AddLocationModal({
   const [loading, setLoading] = useState(false);
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearch(e.target.value);
-    onSearch(e.target.value);
+    const value = e.target.value;
+    setSearch(value);
+    onSearch(value);
   }
 
   async function onSearch(value: string) {
     setLoading(true);
     let location = null;
-    console.log(import.meta.env.VITE_OPEN_WEATHER_API_KEY);
     try {
       const res = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${
@@ -49,7 +49,6 @@ export default function AddLocationModal({
     } catch (err) {
       console.error(err);
     }
-    console.log(location);
     if (!location) return;
     setLocations(location);
     setLoading(false);

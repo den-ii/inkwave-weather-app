@@ -2,7 +2,6 @@ import { useLayoutEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 
 const Forecast = ({ forecast, today }: { forecast: any; today?: boolean }) => {
-  console.log("here:", forecast?.weather[0].main.toLowerCase());
   return (
     <li className="flex items-center justify-between">
       <span className="flex gap-3 items-center">
@@ -46,7 +45,6 @@ export default function LocationDetails() {
         }`
       );
       const data = await res.json();
-      console.log(data);
       setDetails(data);
     };
 
