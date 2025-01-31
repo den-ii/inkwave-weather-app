@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #f55a5a;
+}
+
+* {
+  font-family: "Rubik", sans-serif;
+  color: #2b283a;
+}
+
+.container {
+  @apply max-w-[500px] mx-auto h-screen relative px-5;
+}
